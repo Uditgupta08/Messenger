@@ -1,0 +1,62 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header h1 {
+  text-align: center;
+  color: #333;
+}
+
+.profile {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+}
+
+.profile p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.profile img.profile-pic {
+  max-width: 150px;
+  border-radius: 50%;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  .profile h2 {
+    font-size: 1.8em;
+  }
+
+  .profile p {
+    font-size: 1em;
+  }
+
+  .profile .btn {
+    width: 180px;
+    font-size: 1em;
+  }
+}

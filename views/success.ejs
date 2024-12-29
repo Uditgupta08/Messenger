@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details</title>
+    <link rel="stylesheet" href="/css/profile.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Welcome, <%= user.fullname %>!</h1>
+      </header>
+      <main>
+        <div class="profile">
+          <h2>Your Profile Details</h2>
+          <p><strong>Full Name:</strong> <%= user.fullname %></p>
+          <p><strong>Username:</strong> <%= user.username %></p>
+          <p><strong>Email:</strong> <%= user.email %></p>
+          <p><strong>Phone:</strong> <%= user.phone %></p>
+          <% if (user.profilePic) { %>
+          <p><strong>Profile Picture:</strong></p>
+          <img
+            src="<%= user.profilePic %>"
+            alt="Profile Picture"
+            class="profile-pic"
+          />
+          <% } else { %>
+          <p><strong>Profile Picture:</strong> Not uploaded</p>
+          <% } %>
+        </div>
+        <a href="/users/logout" class="btn">Logout</a>
+        <a href="/conversations" class="btn">Your Chats</a>
+      </main>
+    </div>
+  </body>
+</html>

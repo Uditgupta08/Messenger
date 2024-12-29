@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Conversations</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Your Conversations</h1>
+        <input type="text" id="searchInput" placeholder="Search users..." />
+        <ul id="suggestionsList" style="display: none"></ul>
+      </header>
+      <main>
+        <div class="conversations-list">
+          <% conversations.forEach(convo => { %>
+          <div class="conversation">
+            <h3>
+              <%= convo.isGroup ? convo.groupName : convo.members[0].username %>
+            </h3>
+            <p>
+              Last message: <%= convo.lastMessage ? convo.lastMessage.content :
+              "No messages yet" %>
+              <br />
+              <small>
+                <%= convo.lastMessage ? `Sent by
+                ${convo.lastMessage.senderId.username} on
+                ${convo.lastMessage.createdAt}` : "" %>
+              </small>
+            </p>
+          </div>
+          <% }) %>
+        </div>
+      </main>
+    </div>
+    <script src="/js/conversations.js"></script>
+  </body>
+</html>
