@@ -5,6 +5,7 @@ const Message = require("../models/messageModel");
 const getConversations = async (req, res) => {
   try {
     const userId = req.user.id;
+
     const conversations = await Conversation.find({
       members: { $in: [userId] },
     })
@@ -17,8 +18,11 @@ const getConversations = async (req, res) => {
           select: "username",
         },
       });
+    const filteredConversations = conversations.filter(
+      (convo) => convo.members && convo.members.length > 0
+    );
 
-    res.render("conversations", { conversations });
+    res.render("conversations", { conversations: filteredConversations });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -34,7 +38,6 @@ const searchUsers = async (req, res) => {
     const users = await User.find({
       username: { $regex: username, $options: "i" },
     });
-
     res.json({ users });
   } catch (err) {
     res.status(500).json(err);
@@ -65,17 +68,23 @@ const getChatPage = async (req, res) => {
   try {
     const { userId } = req.params;
     const currentUserId = req.user.id;
+
+    // Find or create conversation
     let conversation = await Conversation.findOne({
       members: { $all: [currentUserId, userId] },
-    }).populate("members", "username");
+    });
+
     if (!conversation) {
       conversation = await Conversation.create({
         members: [currentUserId, userId],
       });
     }
+
+    // Fetch messages and user details
     const messages = await Message.find({
       conversationId: conversation._id,
     }).populate("senderId", "username");
+
     const user = await User.findById(userId);
 
     res.render("chat", { user, messages, conversation });
@@ -87,7 +96,10 @@ const getChatPage = async (req, res) => {
 const sendMessage = async (req, res) => {
   try {
     const { userId } = req.params;
-    const currentUserId = req.user.id;
+    const currentUserId = req.user?.id;
+    if (!currentUserId) {
+      return res.status(400).json({ error: "User not authenticated" });
+    }
     const { message } = req.body;
     let conversation = await Conversation.findOne({
       members: { $all: [currentUserId, userId] },

@@ -7,35 +7,30 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="chat-container">
       <header>
         <h1>Chat with <%= user.username %></h1>
       </header>
       <main>
-        <div class="chat-box">
-          <div class="messages">
-            <% if (messages.length === 0) { %>
-            <p>No messages yet. Start a conversation!</p>
-            <% } else { %> <% messages.forEach(message => { %>
-            <div class="message">
-              <p>
-                <strong><%= message.senderId.username %>:</strong> <%=
-                message.content %>
-              </p>
-              <small><%= message.createdAt %></small>
-            </div>
-            <% }) %> <% } %>
+        <div class="messages">
+          <% messages.forEach((message) => { %>
+          <div
+            class="<%= message.senderId.equals(currentUserId) ? 'outgoing' : 'incoming' %>"
+          >
+            <p><%= message.content %></p>
+            <small><%= message.createdAt %></small>
           </div>
-          <form action="/conversations/chat/<%= user._id %>" method="POST">
-            <input
-              type="text"
-              name="message"
-              placeholder="Type a message..."
-              required
-            />
-            <button type="submit">Send</button>
-          </form>
+          <% }) %>
         </div>
+        <form action="/conversations/chat/<%= user._id %>" method="POST">
+          <input
+            type="text"
+            name="message"
+            placeholder="Type a message..."
+            required
+          />
+          <button type="submit">Send</button>
+        </form>
       </main>
     </div>
   </body>

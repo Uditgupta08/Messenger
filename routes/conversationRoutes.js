@@ -10,7 +10,7 @@ const {
 const verifyToken = require("../middlewares/authenticate");
 router.get("/", verifyToken, getConversations);
 router.get("/search", verifyToken, searchUsers);
-router.get("/chat/:userId", verifyToken, startChat);
+router.get("/start-chat/:userId", verifyToken, startChat);
 router.get("/chat/:userId", verifyToken, getChatPage);
 router.post("/chat/:userId", verifyToken, sendMessage);
 

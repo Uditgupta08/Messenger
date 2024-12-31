@@ -4,7 +4,7 @@ const suggestionsList = document.getElementById("suggestionsList");
 searchInput.addEventListener("input", async (event) => {
   const query = event.target.value;
   if (!query) {
-    suggestionsList.style.display = "none"; // Hide suggestions when input is empty
+    suggestionsList.style.display = "none";
     return;
   }
   try {
@@ -14,15 +14,18 @@ searchInput.addEventListener("input", async (event) => {
     data.users.forEach((user) => {
       const listItem = document.createElement("li");
       listItem.textContent = user.username;
+      listItem.dataset.userId = user._id;
       listItem.addEventListener("click", () => {
-        searchInput.value = user.username;
-        suggestionsList.style.display = "none";
-        const token = localStorage.getItem("authToken");
-        if (token) {
-          window.location.href = `/conversations/chat/${user._id}`;
-        } else {
-          window.location.href = "/login";
-        }
+        const userId = listItem.dataset.userId;
+        // searchInput.value = user.username;
+        // suggestionsList.style.display = "none";
+        // const token = localStorage.getItem("authToken");
+        // if (token) {
+        // window.location.href = `/conversations/chat/${user._id}`;
+        window.location.href = `/conversations/chat/${userId}`;
+        // } else {
+        //   window.location.href = "/login";
+        // }
       });
 
       suggestionsList.appendChild(listItem);

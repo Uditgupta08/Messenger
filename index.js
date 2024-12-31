@@ -8,8 +8,6 @@ require("dotenv").config();
 
 const connectDB = require("./config/db");
 connectDB();
-const verifyToken = require("./middlewares/authenticate");
-const upload = require("./middlewares/upload");
 
 const app = express();
 const server = http.createServer(app);

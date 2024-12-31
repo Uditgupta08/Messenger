@@ -17,17 +17,18 @@
         <div class="conversations-list">
           <% conversations.forEach(convo => { %>
           <div class="conversation">
-            <h3>
-              <%= convo.isGroup ? convo.groupName : convo.members[0].username %>
-            </h3>
+            <% const username = convo.isGroup ? convo.groupName :
+            (convo.members[0]?.username || "Unknown User"); %>
+            <h3><%= username %></h3>
+
             <p>
-              Last message: <%= convo.lastMessage ? convo.lastMessage.content :
-              "No messages yet" %>
+              Last message: <%= convo.lastMessage && convo.lastMessage.content ?
+              convo.lastMessage.content : "No messages yet" %>
               <br />
               <small>
                 <%= convo.lastMessage ? `Sent by
-                ${convo.lastMessage.senderId.username} on
-                ${convo.lastMessage.createdAt}` : "" %>
+                ${convo.lastMessage.senderId.username} on ${new
+                Date(convo.lastMessage.createdAt).toLocaleString()}` : "" %>
               </small>
             </p>
           </div>
